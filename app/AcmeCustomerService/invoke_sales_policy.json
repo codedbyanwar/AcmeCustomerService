@@ -1,0 +1,15 @@
+﻿{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-agentcore:InvokeAgentRuntime"
+      ],
+      "Resource": [
+        "arn:aws:bedrock-agentcore:us-east-1:<ACCOUNT_ID>:runtime/AcmeTelco_AcmeSales-<SALES_RUNTIME_SUFFIX>",
+        "arn:aws:bedrock-agentcore:us-east-1:<ACCOUNT_ID>:runtime/AcmeTelco_AcmeSales-<SALES_RUNTIME_SUFFIX>/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="refresh" content="5" />
+  <title>Acme Telco — Manager Approval Console</title>
+  <style>
+    :root {
+      --acme: #6324c4;
+      --acme-dark: #4a1a94;
+      --ok: #1a7f37;
+      --no: #b42318;
+      --bg: #f5f6fa;
+      --card: #ffffff;
+      --text: #1f2430;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text);
+    }
+    header {
+      background: linear-gradient(135deg, var(--acme), var(--acme-dark));
+      color: #fff; padding: 20px 24px;
+    }
+    header .brand { font-weight: 700; font-size: 1.25rem; letter-spacing: .5px; }
+    header .sub { opacity: .85; font-size: .9rem; margin-top: 2px; }
+    main { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+    h2 { font-size: 1.05rem; margin: 24px 0 12px; }
+    .empty { color: var(--muted); font-style: italic; padding: 16px 0; }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 16px 18px; margin-bottom: 14px; box-shadow: 0 1px 2px rgba(0,0,0,.04);
+    }
+    .row { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 10px; }
+    .row .k { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .4px; }
+    .row .v { font-weight: 600; }
+    .amount { color: var(--acme-dark); }
+    .actions { display: flex; gap: 10px; margin-top: 8px; }
+    button {
+      border: none; border-radius: 8px; padding: 10px 18px; font-size: .95rem;
+      font-weight: 600; cursor: pointer; color: #fff;
+    }
+    button.approve { background: var(--ok); }
+    button.deny { background: var(--no); }
+    button:hover { filter: brightness(1.08); }
+    .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; }
+    .pill.approved { background: #e6f4ea; color: var(--ok); }
+    .pill.denied { background: #fdeceb; color: var(--no); }
+    .hint { color: var(--muted); font-size: .82rem; margin-top: 4px; }
+    .recent-head { display: flex; align-items: center; justify-content: space-between; }
+    .clear-btn { background: #e5e7eb; color: #374151; padding: 6px 14px; font-size: .82rem; }
+    .clear-btn:hover { background: #d1d5db; }
+    @media (max-width: 520px) { .actions { flex-direction: column; } button { width: 100%; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">ACME TELCO</div>
+    <div class="sub">Manager Approval Console — signed in as {{ approver }}</div>
+  </header>
+  <main>
+    <h2>Pending discount approvals</h2>
+    {% if pending %}
+      {% for r in pending %}
+      <div class="card">
+        <div class="row">
+          <div><div class="k">Customer</div><div class="v">{{ r.customer_name }} ({{ r.customer_id }})</div></div>
+          <div><div class="k">Device</div><div class="v">{{ r.device_name }}</div></div>
+        </div>
+        <div class="row">
+          <div><div class="k">Upfront</div><div class="v">${{ '%.0f'|format(r.base_price) }}</div></div>
+          <div><div class="k">Requested discount</div><div class="v amount">${{ '%.0f'|format(r.requested_discount) }}</div></div>
+          <div><div class="k">Would pay</div><div class="v">${{ '%.0f'|format(r.base_price - r.requested_discount) }}</div></div>
+        </div>
+        {% if r.reason %}<div class="hint">Reason: {{ r.reason }}</div>{% endif %}
+        <form class="actions" method="post" action="/decide">
+          <input type="hidden" name="request_id" value="{{ r.request_id }}" />
+          <button class="approve" name="action" value="approve">Approve</button>
+          <button class="deny" name="action" value="deny">Deny</button>
+        </form>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty">No pending approvals. New requests appear here automatically.</div>
+    {% endif %}
+
+    <div class="recent-head">
+      <h2>Recent decisions</h2>
+      {% if recent %}
+      <form method="post" action="/clear" onsubmit="return confirm('Clear decision history?');">
+        <button type="submit" class="clear-btn">Clear</button>
+      </form>
+      {% endif %}
+    </div>
+    {% if recent %}
+      {% for r in recent %}
+      <div class="card">
+        <div class="row">
+          <div><div class="k">Customer</div><div class="v">{{ r.customer_name }}</div></div>
+          <div><div class="k">Device</div><div class="v">{{ r.device_name }}</div></div>
+          <div><div class="k">Discount</div><div class="v amount">${{ '%.0f'|format(r.requested_discount) }}</div></div>
+          <div><div class="k">Decision</div>
+            <div class="v"><span class="pill {{ r.status }}">{{ r.status }}</span> by {{ r.approver }}</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty">No decisions yet.</div>
+    {% endif %}
+  </main>
+</body>
+</html>

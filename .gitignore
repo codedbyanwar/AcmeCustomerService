@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual env
+.venv/
+
+# Local HITL/OTP store
+acme_hitl_store.json
+
+# AgentCore CLI local state
+agentcore/.cli/
+agentcore/.env.local
+
+# OS
+.DS_Store
+Thumbs.db

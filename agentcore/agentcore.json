@@ -1,0 +1,85 @@
+﻿{
+  "name": "AcmeTelco",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "agentcore:created-by": "agentcore-cli",
+    "agentcore:project-name": "AcmeTelco"
+  },
+  "runtimes": [
+    {
+      "name": "AcmeCustomerService",
+      "description": "Acme Telco Customer Service agent (plan Q&A + handoff to Sales)",
+      "build": "CodeZip",
+      "entrypoint": "main.py",
+      "codeLocation": "app/AcmeCustomerService/",
+      "runtimeVersion": "PYTHON_3_13",
+      "networkMode": "PUBLIC",
+      "protocol": "HTTP",
+      "requestHeaderAllowlist": [
+        "Authorization"
+      ],
+      "authorizerType": "CUSTOM_JWT",
+      "authorizerConfiguration": {
+        "customJwtAuthorizer": {
+          "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/<COGNITO_POOL_ID>/.well-known/openid-configuration",
+          "allowedClients": [
+            "<COGNITO_APP_CLIENT_ID>"
+          ]
+        }
+      },
+      "envVars": [
+        {
+          "name": "SALES_RUNTIME_ARN",
+          "value": "arn:aws:bedrock-agentcore:us-east-1:<ACCOUNT_ID>:runtime/AcmeTelco_AcmeSales-<SALES_RUNTIME_SUFFIX>"
+        }
+      ],
+      "additionalPolicies": [
+        "invoke_sales_policy.json"
+      ]
+    },
+    {
+      "name": "AcmeSales",
+      "description": "Acme Telco Sales agent (re-contract, device discounts, HITL approval, OTP)",
+      "build": "CodeZip",
+      "entrypoint": "main.py",
+      "codeLocation": "app/AcmeSales/",
+      "runtimeVersion": "PYTHON_3_13",
+      "networkMode": "PUBLIC",
+      "protocol": "HTTP",
+      "authorizerType": "AWS_IAM"
+    }
+  ],
+  "memories": [
+    {
+      "name": "SharedMemory",
+      "eventExpiryDuration": 30,
+      "strategies": [
+        {
+          "type": "SEMANTIC",
+          "namespaceTemplates": [
+            "/users/{actorId}/facts"
+          ]
+        },
+        {
+          "type": "SUMMARIZATION",
+          "namespaceTemplates": [
+            "/summaries/{actorId}/{sessionId}"
+          ]
+        }
+      ]
+    }
+  ],
+  "knowledgeBases": [],
+  "credentials": [],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [],
+  "policyEngines": [],
+  "configBundles": [],
+  "abTests": [],
+  "harnesses": [],
+  "datasets": [],
+  "capacityProviders": [],
+  "payments": []
+}

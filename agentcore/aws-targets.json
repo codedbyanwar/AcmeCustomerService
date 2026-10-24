@@ -1,0 +1,8 @@
+﻿[
+  {
+    "name": "default",
+    "description": "Acme Telco deploy target (us-east-1)",
+    "account": "<ACCOUNT_ID>",
+    "region": "us-east-1"
+  }
+]

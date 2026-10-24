@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acme Telco — Customer Service Portal</title>
+  <style>
+    :root { --acme:#6324c4; --acme-dark:#4a1a94; --bg:#f5f6fa; --text:#1f2430; --muted:#6b7280; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--text); }
+    .hero {
+      min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; padding:24px;
+      background:linear-gradient(135deg, var(--acme), var(--acme-dark)); color:#fff;
+    }
+    .logo { font-weight:800; font-size:2.5rem; letter-spacing:3px; margin-bottom:6px; }
+    .logo span { opacity:.75; font-weight:400; }
+    .tagline { font-size:1.35rem; font-weight:600; margin:18px 0 6px; }
+    .sub { opacity:.85; max-width:520px; line-height:1.5; }
+    .cta {
+      margin-top:34px; display:inline-block; background:#fff; color:var(--acme-dark);
+      font-weight:700; font-size:1.05rem; padding:14px 34px; border-radius:999px;
+      text-decoration:none; box-shadow:0 6px 20px rgba(0,0,0,.2); transition:transform .08s ease;
+    }
+    .cta:hover { transform:translateY(-2px); }
+    .foot { margin-top:40px; font-size:.8rem; opacity:.7; }
+    @media (max-width:480px){ .logo{font-size:2rem;} .tagline{font-size:1.1rem;} }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="logo">ACME <span>TELCO</span></div>
+    <div class="tagline">Welcome to Acme Customer Service Portal</div>
+    <div class="sub">Ask about your plan and subscription fees, or re-contract your line and pick up a new device — all in one chat.</div>
+    <a class="cta" href="/chat">Start chat</a>
+    <div class="foot">Prototype • local demo</div>
+  </div>
+</body>
+</html>
