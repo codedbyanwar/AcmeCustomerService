@@ -253,3 +253,16 @@ See [AGENTS.md](AGENTS.md) for invariants and the resource model.
 
 > This is a prototype. The blocking HITL holds the connection open while polling a local store;
 > the OTP uses a fixed demo PIN. Both are deliberate simplifications for a $0, dependency-free demo.
+
+## Chat screens
+<img width="661" height="943" alt="image" src="https://github.com/user-attachments/assets/b06e1ca8-5114-46ec-b817-dda32e15773f" />
+<img width="667" height="945" alt="image" src="https://github.com/user-attachments/assets/3759cb99-603c-4466-bdbe-233ff4b2d48d" />
+<img width="663" height="946" alt="image" src="https://github.com/user-attachments/assets/2af01f87-07f6-4c0e-bd3a-a8711085eb19" />
+<img width="691" height="943" alt="image" src="https://github.com/user-attachments/assets/3eb5a323-87cd-444b-b3dc-a056ed2150a3" />
+<img width="694" height="940" alt="image" src="https://github.com/user-attachments/assets/617e6ad6-3ab7-42b2-9e62-120b2a814f9e" />
+
+## Manager Console (Human-in-the-Loop)
+<img width="832" height="948" alt="image" src="https://github.com/user-attachments/assets/ba117b62-f04e-488c-8805-2a8452a805a6" />
+
+
+
